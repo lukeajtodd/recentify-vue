@@ -1,11 +1,29 @@
 module.exports = {
   purge: [],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
+  darkMode: false,
+  fontSize: {
+    'sm': '0.875rem',
+    'base': '1rem',
+    'lg': '1.25rem',
+    'xl': '1.5rem',
+    '2xl': '2.25rem'
   },
-  variants: {
-    extend: {},
+  theme: {
+    extend: {
+      spacing: {
+        'minor': '3.75rem',
+        'major': '12.5rem'
+      },
+      width: {
+        'logo-sm': '140px',
+        'logo-lg': '200px'
+      },
+      colors: {
+        "dark": "#191414",
+        "primary": "#1DB954",
+        "text": "#FFFFFF"
+      },
+    },
   },
   plugins: [],
 }
