@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 px-minor">
       <div v-for="(track, index) in tracks" :key="`${track.id}${index}`">
         {{ track.name }}
       </div>

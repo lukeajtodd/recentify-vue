@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       spacing: {
         'minor': '3.75rem',
-        'major': '12.5rem'
+        'major': '10.5rem'
       },
       width: {
         'logo-sm': '140px',

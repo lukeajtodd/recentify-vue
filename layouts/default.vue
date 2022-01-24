@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col lg:flex-row md:flex-nowrap mx-auto px-minor pt-minor lg:px-major lg:pt-major">
-    <aside class="flex flex-col md:h-screen md:sticky md:top-0">
+  <div class="flex flex-col lg:flex-row lg:flex-nowrap mx-auto px-minor pt-minor lg:px-major lg:pt-major">
+    <aside class="flex flex-col lg:h-screen lg:sticky lg:top-0">
       <img
         class="w-logo-sm lg:w-logo-lg"
         :class="{ 'mb-10': !token }"
@@ -10,7 +10,7 @@
       <Sidebar v-if="token" />
       <Connect v-else :connect="connect" />
     </aside>
-    <main class="flex align-center w-full md:flex-1 mt-4">
+    <main class="flex align-center w-full lg:flex-1 mt-4">
       <Nuxt />
     </main>
   </div>
