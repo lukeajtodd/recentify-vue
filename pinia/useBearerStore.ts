@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const bearerStore = defineStore('bearer', {
+export const useBearerStore = defineStore('bearer', {
   state: () => {
     const token = localStorage.getItem('authorization')
 

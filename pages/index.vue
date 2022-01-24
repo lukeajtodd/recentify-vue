@@ -12,15 +12,15 @@
 import Vue from 'vue'
 import { mapActions, mapState } from 'pinia'
 
-import { tracksStore } from '@/pinia/tracksStore'
+import { useSpotifyStore } from '~/pinia/useSpotifyStore'
 
 export default Vue.extend({
   name: 'IndexPage',
   computed: {
-    ...mapState(tracksStore, ['tracks'])
+    ...mapState(useSpotifyStore, ['tracks'])
   },
   methods: {
-    ...mapActions(tracksStore, ['updateTracks'])
+    ...mapActions(useSpotifyStore, ['updateTracks'])
   },
   mounted() {
     this.updateTracks()

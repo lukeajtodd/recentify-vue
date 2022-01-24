@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-import { bearerStore } from './bearerStore'
+import { useBearerStore } from './useBearerStore'
 
 interface Artist {
   id: string
@@ -18,7 +18,7 @@ interface State {
   tracks: Track[]
 }
 
-export const tracksStore = defineStore('tracks', {
+export const useSpotifyStore = defineStore('spotify', {
   state: (): State => {
     return {
       tracks: []
@@ -26,7 +26,7 @@ export const tracksStore = defineStore('tracks', {
   },
   actions: {
     async updateTracks() {
-      const { beareredToken } = bearerStore()
+      const { beareredToken } = useBearerStore()
 
       const result = await axios({
         method: 'GET',

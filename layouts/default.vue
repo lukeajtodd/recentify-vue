@@ -24,7 +24,7 @@ import Sidebar from '@/components/Sidebar.vue'
 import Connect from '@/components/Connect.vue'
 
 import { href, connect } from '@/helpers/auth'
-import { bearerStore } from '@/pinia/bearerStore'
+import { useBearerStore } from '~/pinia/useBearerStore'
 
 export default Vue.extend({
   components: {
@@ -32,7 +32,7 @@ export default Vue.extend({
     Connect
   },
   computed: {
-    ...mapState(bearerStore, ['token'])
+    ...mapState(useBearerStore, ['token'])
   },
   methods: {
     connect() {

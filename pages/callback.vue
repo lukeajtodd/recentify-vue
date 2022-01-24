@@ -6,11 +6,11 @@
 import Vue from 'vue'
 import { mapWritableState } from 'pinia'
 
-import { bearerStore } from '@/pinia/bearerStore'
+import { useBearerStore } from '~/pinia/useBearerStore'
 
 export default Vue.extend({
   computed: {
-    ...mapWritableState(bearerStore, ['token']),
+    ...mapWritableState(useBearerStore, ['token']),
   },
   async mounted() {
     const token = window.location.hash.substr(1).split('&')[0].split('=')[1]
