@@ -1,8 +1,9 @@
 <template>
-  <div class="flex flex-col lg:flex-row md:flex-nowrap mx-auto">
-    <aside class="flex flex-col md:h-screen md:sticky md:top-0 px-minor pt-minor lg:px-major lg:pt-major">
+  <div class="flex flex-col lg:flex-row md:flex-nowrap mx-auto px-minor pt-minor lg:px-major lg:pt-major">
+    <aside class="flex flex-col md:h-screen md:sticky md:top-0">
       <img
         class="w-logo-sm lg:w-logo-lg"
+        :class="{ 'mb-10': !token }"
         src="/images/logo.png"
         alt="Spotify Logo"
       />
@@ -23,7 +24,6 @@ import Sidebar from '@/components/Sidebar.vue'
 import Connect from '@/components/Connect.vue'
 
 import { href, connect } from '@/helpers/auth'
-
 import { bearerStore } from '@/pinia/bearerStore'
 
 export default Vue.extend({

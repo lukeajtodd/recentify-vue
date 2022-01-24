@@ -8,4 +8,9 @@ export const bearerStore = defineStore('bearer', {
       token: token || '',
     }
   },
+  getters: {
+    beareredToken(state) {
+      return `Bearer ${state.token}`
+    }
+  }
 })
