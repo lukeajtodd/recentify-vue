@@ -6,8 +6,8 @@
         src="/images/logo.png"
         alt="Spotify Logo"
       />
-      <Sidebar />
-      <Connect :connect="connect" />
+      <Sidebar v-if="token" />
+      <Connect v-else :connect="connect" />
     </aside>
     <main class="flex align-center w-full md:flex-1 mt-4">
       <Nuxt />
@@ -17,19 +17,28 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { mapState } from 'pinia'
 
 import Sidebar from '@/components/Sidebar.vue'
 import Connect from '@/components/Connect.vue'
 
-import { connect } from '@/helpers/auth'
+import { href, connect } from '@/helpers/auth'
+
+import { bearerStore } from '@/pinia/bearerStore'
 
 export default Vue.extend({
   components: {
     Sidebar,
     Connect
   },
+  computed: {
+    ...mapState(bearerStore, ['token'])
+  },
   methods: {
-    connect
+    connect() {
+      // @ts-ignore
+      connect(href(this.$config.clientId, this.$config.redirectURI))
+    }
   }
 })
 </script>

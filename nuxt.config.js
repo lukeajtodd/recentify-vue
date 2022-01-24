@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -59,6 +61,11 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: '/',
+  },
+
+  publicRuntimeConfig: {
+    clientId: process.env.CLIENT_ID,
+    redirectURI: process.env.REDIRECT_URI
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
