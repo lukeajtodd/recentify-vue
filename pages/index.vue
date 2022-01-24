@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
-      <div v-for="track in tracks" :key="track.id">
+      <div v-for="(track, index) in tracks" :key="`${track.id}${index}`">
         {{ track.name }}
       </div>
     </div>

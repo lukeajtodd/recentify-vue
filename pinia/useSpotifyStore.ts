@@ -3,28 +3,49 @@ import axios from 'axios'
 
 import { useBearerStore } from './useBearerStore'
 
-interface Artist {
+export interface Artist {
   id: string
   name: string
 }
 
-interface Track {
+export interface Track {
   id: string
   name: string
   artist: Artist
 }
 
 interface State {
+  filteredArtist: Artist['id']
+  artists: Artist[]
   tracks: Track[]
 }
 
 export const useSpotifyStore = defineStore('spotify', {
   state: (): State => {
     return {
+      filteredArtist: '',
+      artists: [],
       tracks: []
     }
   },
   actions: {
+    updateArtist(artist: Artist['id']) {
+      this.filteredArtist = artist
+    },
+    updateArtists() {
+      this.artists = this.tracks.reduce((artists: Artist[], track: Track) => {
+        if (artists.find((artist: Artist) => artist.id === track.artist.id)) {
+          return artists
+        }
+
+        artists.push({
+          id: track.artist.id,
+          name: track.artist.name
+        })
+
+        return artists
+      }, [])
+    },
     async updateTracks() {
       const { beareredToken } = useBearerStore()
 
@@ -39,7 +60,6 @@ export const useSpotifyStore = defineStore('spotify', {
       })
 
       this.tracks = [...result.data.items].map(item => {
-        console.log(item)
         return {
           id: item.track.id,
           name: item.track.name,
@@ -49,6 +69,8 @@ export const useSpotifyStore = defineStore('spotify', {
           }
         }
       })
+
+      this.updateArtists()
     }
   }
 })
