@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2 class="text-xl lg:text-2xl text-primary font-bold pt-10 lg:pt-32">
+    <h2 class="text-xl lg:text-2xl text-primary font-bold">
       Recently Played
     </h2>
     <ul class="py-5 lg:py-10">

@@ -10,7 +10,26 @@ export const useBearerStore = defineStore('bearer', {
   },
   getters: {
     beareredToken(state) {
-      return `Bearer ${state.token}`
+      let token: string = state.token
+
+      if (!state.token) {
+        const cachedToken = localStorage.getItem('authorization')
+        if (cachedToken) {
+          token = cachedToken
+        }
+      }
+
+      if (!token) {
+        return null
+      }
+
+      return `Bearer ${token}`
+    }
+  },
+  actions: {
+    resetToken() {
+      localStorage.removeItem('authorization')
+      this.token = ''
     }
   }
 })

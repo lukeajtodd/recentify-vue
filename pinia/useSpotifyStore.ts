@@ -29,6 +29,11 @@ export const useSpotifyStore = defineStore('spotify', {
     }
   },
   actions: {
+    resetStore() {
+      this.filteredArtist = '';
+      this.artists = []
+      this.tracks = []
+    },
     updateArtist(artist: Artist['id']) {
       this.filteredArtist = artist
     },
@@ -48,6 +53,11 @@ export const useSpotifyStore = defineStore('spotify', {
     },
     async updateTracks() {
       const { beareredToken } = useBearerStore()
+
+      if (!beareredToken) {
+        console.error('Not authorised')
+        return
+      }
 
       const result = await axios({
         method: 'GET',

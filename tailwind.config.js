@@ -18,6 +18,9 @@ module.exports = {
         'logo-sm': '140px',
         'logo-lg': '200px'
       },
+      height: {
+        'page-lg': 'calc(100vh - 21rem)'
+      },
       colors: {
         "dark": "#191414",
         "primary": "#1DB954",
