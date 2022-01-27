@@ -52,6 +52,10 @@ export const useSpotifyStore = defineStore('spotify', {
     }
   },
   actions: {
+    resetFilter() {
+      localStorage.removeItem('filteredArtist')
+      this.filteredArtist = ''
+    },
     resetStore() {
       this.filteredArtist = '';
       this.artists = []
