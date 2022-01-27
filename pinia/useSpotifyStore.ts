@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios, { AxiosResponse } from 'axios'
 
 import { useBearerStore } from './useBearerStore'
+import { usePaginationStore } from './usePaginationStore'
 
 export interface Artist {
   id: string
@@ -13,17 +14,11 @@ export interface Track {
   name: string
   artist: Artist
 }
-interface Pagination {
-  current: number
-  next: number | null
-  nextUrl: string | null
-}
 
 interface State {
   filteredArtist: Artist['id']
   artists: Artist[]
   tracks: Track[]
-  pagination: Pagination
 }
 
 interface RecentlyPlayedResponse {
@@ -40,18 +35,19 @@ export const useSpotifyStore = defineStore('spotify', {
     return {
       filteredArtist: '',
       artists: [],
-      tracks: [],
-      pagination: {
-        current: 1,
-        next: null,
-        nextUrl: null
-      }
+      tracks: []
     }
   },
   getters: {
     currentTracks(state) {
+      const cachedFilteredArtist = localStorage.getItem('filteredArtist')
+
+      if (!state.filteredArtist && cachedFilteredArtist) {
+        this.filteredArtist = cachedFilteredArtist
+      }
+
       if (!state.filteredArtist) return this.tracks
-      
+
       return this.tracks.filter(track => track.artist.id === state.filteredArtist)
     }
   },
@@ -62,6 +58,7 @@ export const useSpotifyStore = defineStore('spotify', {
       this.tracks = []
     },
     updateArtist(artist: Artist['id']) {
+      localStorage.setItem('filteredArtist', artist)
       this.filteredArtist = artist
     },
     updateArtists() {
@@ -80,6 +77,7 @@ export const useSpotifyStore = defineStore('spotify', {
     },
     async updateTracks() {
       const { beareredToken } = useBearerStore()
+      const { pagination } = usePaginationStore()
 
       if (!beareredToken) {
         console.error('Not authorised')
@@ -96,9 +94,9 @@ export const useSpotifyStore = defineStore('spotify', {
         }
       })
 
-      this.pagination.next = this.pagination.current + 1
+      pagination.tracks.next = pagination.tracks.current + 1
       // @ts-ignore
-      this.pagination.nextUrl = result.next
+      pagination.tracks.nextUrl = result.next
 
       this.tracks = [...result.data.items].map(item => {
         return {
