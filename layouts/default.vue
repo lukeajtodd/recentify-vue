@@ -11,9 +11,10 @@
     "
   >
     <aside class="flex flex-col lg:h-page-lg lg:sticky lg:top-0 lg:pt-major">
-      <h1 class="text-xl lg:text-2xl text-primary font-bold">
+      <h1 class="text-xl lg:text-3xl text-primary font-bold">
         Recentify
       </h1>
+      <p v-if="!token" class="text-base lg:text-lg text-white mt-8">View all your recent artists from Spotify. Just hit connect!</p>
       <Sidebar v-if="token" />
       <Connect :connect="connect" :disconnect="disconnect" />
     </aside>

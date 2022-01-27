@@ -10,6 +10,7 @@
       mb-4
       lg:fixed lg:bottom-4 lg:right-4
     "
+    :class="{ 'hidden': pages.length === 1 }"
   >
     <button
       class="

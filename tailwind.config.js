@@ -6,7 +6,8 @@ module.exports = {
     'base': '1rem',
     'lg': '1.25rem',
     'xl': '1.5rem',
-    '2xl': '2.25rem'
+    '2xl': '2.25rem', 
+    '3xl': '3rem'
   },
   theme: {
     extend: {
