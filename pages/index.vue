@@ -25,6 +25,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(useBearerStore, ['token']),
+    // @ts-ignore
     ...mapState(useSpotifyStore, ['currentTracks']),
   },
   methods: {

@@ -8,17 +8,20 @@
       text-white
       font-semibold
       mb-4
-      lg:bg-white
-      lg:text-dark
-      lg:rounded-3xl
-      lg:py-4
-      lg:px-6
-      lg:fixed
-      lg:bottom-4
-      lg:right-4
+      lg:fixed lg:bottom-4 lg:right-4
     "
   >
-    <div class="px-2">
+    <button
+      class="
+        text-white
+        lg:bg-white lg:text-dark lg:rounded-l-3xl
+        px-2
+        lg:py-4 lg:px-4
+      "
+      :disabled="!hasPrevious"
+      :class="{ 'hover:bg-gray-200': hasPrevious, 'cursor-pointer': hasPrevious }"
+      @click="goPrev"
+    >
       <svg
         width="24"
         height="24"
@@ -31,17 +34,18 @@
           fill="currentColor"
         />
       </svg>
-    </div>
-    <div class="flex justify-between">
-      <span class="px-2 cursor-pointer" v-if="current > 1">
-        {{ previous }}
-      </span>
-      <span class="px-2 opacity-80">{{ current }}</span>
-      <span @click="goNext" class="px-2 cursor-pointer" v-if="next">
-        {{ next }}
-      </span>
-    </div>
-    <div class="px-2">
+    </button>
+    <button
+      class="
+        text-white
+        lg:bg-white lg:text-dark lg:rounded-r-3xl
+        px-2
+        lg:py-4 lg:px-4
+      "
+      :disabled="!hasNext"
+      :class="{ 'hover:bg-gray-200': hasNext, 'cursor-pointer': hasNext }"
+      @click="goNext"
+    >
       <svg
         width="24"
         height="24"
@@ -54,7 +58,7 @@
           fill="currentColor"
         />
       </svg>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -65,24 +69,27 @@ import { mapState, mapActions } from 'pinia'
 import { usePaginationStore } from '~/pinia/usePaginationStore'
 import { useSpotifyStore } from '~/pinia/useSpotifyStore'
 
+import { Direction } from '~/pinia/useSpotifyStore'
+
 export default Vue.extend({
   computed: {
-    ...mapState(usePaginationStore, ['pagination']),
-    previous() {
-      return this.pagination.current - 1
+    ...mapState(usePaginationStore, ['index', 'pages']),
+    hasPrevious() {
+      return this.index > 0
     },
-    current() {
-      return this.pagination.current
-    },
-    next() {
-      console.log(this.pagination)
-      return this.pagination.nextUrl ? this.pagination.current + 1 : null
+    hasNext() {
+      return this.index <= this.pages.length
     },
   },
   methods: {
     ...mapActions(useSpotifyStore, ['updateTracks']),
+    goPrev() {
+      // @ts-ignore
+      this.updateTracks(Direction.Previous)
+    },
     goNext() {
-      this.updateTracks(this.pagination.nextUrl)
+      // @ts-ignore
+      this.updateTracks(Direction.Next)
     },
   },
 })

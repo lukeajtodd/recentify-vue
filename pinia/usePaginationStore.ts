@@ -1,23 +1,39 @@
 import { defineStore } from 'pinia'
 
-interface Pagination {
-  current: number
-  next: number | null
-  nextUrl?: string | null
-}
+import { Direction, baseUrl } from './useSpotifyStore'
 
 interface State {
-  pagination: Pagination
+  index: number
+  pages: string[]
 }
 
 export const usePaginationStore = defineStore('pagination', {
   state: (): State => {
     return {
-      pagination: {
-        current: 1,
-        next: null,
-        nextUrl: null,
-      },
+      index: 0,
+      pages: [baseUrl]
     }
   },
+  actions: {
+    getUrl() {
+      return this.pages[this.index]
+    },
+    updateIndex(direction: Direction) {
+      const goingNext = direction === Direction.Next
+      const goingPrevious = direction === Direction.Previous
+
+      if (goingNext) {
+        this.index += 1
+      }
+
+      if (goingPrevious) {
+        this.index -= 1
+      }
+    },
+    updatePages(nextPage: string) {
+      if (this.pages.indexOf(nextPage) === -1) {
+        this.pages.push(nextPage)
+      }
+    }
+  }
 })

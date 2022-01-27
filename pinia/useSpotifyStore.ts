@@ -15,6 +15,11 @@ export interface Track {
   artist: Artist
 }
 
+export enum Direction {
+  Next = 'next',
+  Previous = 'previous',
+}
+
 interface State {
   filteredArtist: Artist['id']
   artists: Artist[]
@@ -30,12 +35,14 @@ interface RecentlyPlayedResponse {
   total: number
 }
 
+export const baseUrl = 'https://api.spotify.com/v1/me/player/recently-played?limit=10'
+
 export const useSpotifyStore = defineStore('spotify', {
   state: (): State => {
     return {
       filteredArtist: '',
       artists: [],
-      tracks: []
+      tracks: [],
     }
   },
   getters: {
@@ -48,8 +55,10 @@ export const useSpotifyStore = defineStore('spotify', {
 
       if (!state.filteredArtist) return this.tracks
 
-      return this.tracks.filter(track => track.artist.id === state.filteredArtist)
-    }
+      return this.tracks.filter(
+        (track) => track.artist.id === state.filteredArtist
+      )
+    },
   },
   actions: {
     resetFilter() {
@@ -57,7 +66,7 @@ export const useSpotifyStore = defineStore('spotify', {
       this.filteredArtist = ''
     },
     resetStore() {
-      this.filteredArtist = '';
+      this.filteredArtist = ''
       this.artists = []
       this.tracks = []
     },
@@ -73,52 +82,54 @@ export const useSpotifyStore = defineStore('spotify', {
 
         artists.push({
           id: track.artist.id,
-          name: track.artist.name
+          name: track.artist.name,
         })
 
         return artists
       }, [])
     },
-    async updateTracks(url: string = 'https://api.spotify.com/v1/me/player/recently-played?limit=10') {
+    async updateTracks(direction?: Direction) {
       const { beareredToken } = useBearerStore()
-      const { pagination } = usePaginationStore()
+      const { getUrl, updatePages, updateIndex } = usePaginationStore()
 
       if (!beareredToken) {
         console.error('Not authorised')
         return
       }
 
+      if (direction) {
+        updateIndex(direction)
+      }
+
       const result: AxiosResponse<RecentlyPlayedResponse> = await axios({
         method: 'GET',
         responseType: 'json',
-        url,
+        url: getUrl(),
         headers: {
-          'Authorization': beareredToken,
-          'Content-Type': 'application/json'
-        }
+          Authorization: beareredToken,
+          'Content-Type': 'application/json',
+        },
       })
 
-      pagination.next = pagination.current + 1
-      // @ts-ignore
-      pagination.nextUrl = result.data.next
+      updatePages(result.data.next)
 
-      this.tracks = [...result.data.items].map(item => {
+      this.tracks = [...result.data.items].map((item) => {
         return {
           id: item.track.id,
           name: item.track.name,
           image: item.track.album.images[1],
           album: {
             id: item.track.album.id,
-            name: item.track.album.name
+            name: item.track.album.name,
           },
           artist: {
             id: item.track.artists[0].id,
             name: item.track.artists[0].name,
-          }
+          },
         }
       })
 
       this.updateArtists()
-    }
-  }
+    },
+  },
 })
