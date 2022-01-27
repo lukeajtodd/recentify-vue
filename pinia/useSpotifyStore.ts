@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import { useBearerStore } from './useBearerStore'
 
@@ -13,11 +13,26 @@ export interface Track {
   name: string
   artist: Artist
 }
+interface Pagination {
+  current: number
+  next: number | null
+  nextUrl: string | null
+}
 
 interface State {
   filteredArtist: Artist['id']
   artists: Artist[]
   tracks: Track[]
+  pagination: Pagination
+}
+
+interface RecentlyPlayedResponse {
+  href: string
+  items: any[]
+  limit: number
+  next: string
+  cursors: {}
+  total: number
 }
 
 export const useSpotifyStore = defineStore('spotify', {
@@ -25,7 +40,19 @@ export const useSpotifyStore = defineStore('spotify', {
     return {
       filteredArtist: '',
       artists: [],
-      tracks: []
+      tracks: [],
+      pagination: {
+        current: 1,
+        next: null,
+        nextUrl: null
+      }
+    }
+  },
+  getters: {
+    currentTracks(state) {
+      if (!state.filteredArtist) return this.tracks
+      
+      return this.tracks.filter(track => track.artist.id === state.filteredArtist)
     }
   },
   actions: {
@@ -59,15 +86,19 @@ export const useSpotifyStore = defineStore('spotify', {
         return
       }
 
-      const result = await axios({
+      const result: AxiosResponse<RecentlyPlayedResponse> = await axios({
         method: 'GET',
         responseType: 'json',
-        url: `https://api.spotify.com/v1/me/player/recently-played`,
+        url: `https://api.spotify.com/v1/me/player/recently-played?limit=10`,
         headers: {
           'Authorization': beareredToken,
           'Content-Type': 'application/json'
         }
       })
+
+      this.pagination.next = this.pagination.current + 1
+      // @ts-ignore
+      this.pagination.nextUrl = result.next
 
       this.tracks = [...result.data.items].map(item => {
         return {

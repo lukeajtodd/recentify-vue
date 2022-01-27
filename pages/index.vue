@@ -1,7 +1,7 @@
 <template>
   <div v-if="token">
     <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:px-minor">
-      <Card v-for="(track, index) in tracks" :key="`${track.id}${index}`" :track="track" />
+      <Card v-for="(track, index) in currentTracks" :key="`${track.id}${index}`" :track="track" />
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(useBearerStore, ['token']),
-    ...mapState(useSpotifyStore, ['tracks'])
+    ...mapState(useSpotifyStore, ['currentTracks']),
   },
   methods: {
     ...mapActions(useSpotifyStore, ['updateTracks'])
