@@ -42,7 +42,7 @@ export const useSpotifyStore = defineStore('spotify', {
     return {
       filteredArtist: '',
       artists: [],
-      tracks: [],
+      tracks: []
     }
   },
   getters: {

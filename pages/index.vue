@@ -34,7 +34,7 @@ export default Vue.extend({
   name: 'IndexPage',
   components: {
     Card,
-    Pagination,
+    Pagination
   },
   computed: {
     ...mapState(useBearerStore, ['token']),

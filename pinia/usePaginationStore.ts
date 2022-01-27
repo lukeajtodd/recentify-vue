@@ -8,12 +8,10 @@ interface State {
 }
 
 export const usePaginationStore = defineStore('pagination', {
-  state: (): State => {
-    return {
-      index: 0,
-      pages: [baseUrl]
-    }
-  },
+  state: (): State => ({
+    index: 0,
+    pages: [baseUrl]
+  }),
   actions: {
     getUrl() {
       return this.pages[this.index]
