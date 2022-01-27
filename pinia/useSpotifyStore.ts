@@ -79,7 +79,7 @@ export const useSpotifyStore = defineStore('spotify', {
         return artists
       }, [])
     },
-    async updateTracks() {
+    async updateTracks(url: string = 'https://api.spotify.com/v1/me/player/recently-played?limit=10') {
       const { beareredToken } = useBearerStore()
       const { pagination } = usePaginationStore()
 
@@ -91,16 +91,16 @@ export const useSpotifyStore = defineStore('spotify', {
       const result: AxiosResponse<RecentlyPlayedResponse> = await axios({
         method: 'GET',
         responseType: 'json',
-        url: `https://api.spotify.com/v1/me/player/recently-played?limit=10`,
+        url,
         headers: {
           'Authorization': beareredToken,
           'Content-Type': 'application/json'
         }
       })
 
-      pagination.tracks.next = pagination.tracks.current + 1
+      pagination.next = pagination.current + 1
       // @ts-ignore
-      pagination.tracks.nextUrl = result.next
+      pagination.nextUrl = result.data.next
 
       this.tracks = [...result.data.items].map(item => {
         return {

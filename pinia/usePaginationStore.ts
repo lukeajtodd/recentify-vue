@@ -1,13 +1,9 @@
 import { defineStore } from 'pinia'
 
-interface PaginationItem {
+interface Pagination {
   current: number
   next: number | null
   nextUrl?: string | null
-}
-
-interface Pagination {
-  tracks: PaginationItem
 }
 
 interface State {
@@ -18,12 +14,10 @@ export const usePaginationStore = defineStore('pagination', {
   state: (): State => {
     return {
       pagination: {
-        tracks: {
-          current: 1,
-          next: null,
-          nextUrl: null
-        }
-      }
+        current: 1,
+        next: null,
+        nextUrl: null,
+      },
     }
-  }
+  },
 })

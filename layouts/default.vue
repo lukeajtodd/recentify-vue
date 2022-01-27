@@ -17,7 +17,7 @@
       <Sidebar v-if="token" />
       <Connect :connect="connect" :disconnect="disconnect" />
     </aside>
-    <main class="flex align-center w-full lg:flex-1 pt-minor lg:pt-major">
+    <main class="flex align-center w-full lg:flex-1 lg:pt-major">
       <Nuxt />
     </main>
   </div>

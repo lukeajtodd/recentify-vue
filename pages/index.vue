@@ -1,5 +1,6 @@
 <template>
   <div v-if="token">
+    <Pagination />
     <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8 lg:px-minor">
       <Card v-for="(track, index) in currentTracks" :key="`${track.id}${index}`" :track="track" />
     </div>
@@ -14,11 +15,13 @@ import { useSpotifyStore } from '~/pinia/useSpotifyStore'
 import { useBearerStore } from '~/pinia/useBearerStore'
 
 import Card from '~/components/Card.vue'
+import Pagination from '~/components/Pagination.vue'
 
 export default Vue.extend({
   name: 'IndexPage',
   components: {
-    Card
+    Card,
+    Pagination
   },
   computed: {
     ...mapState(useBearerStore, ['token']),
