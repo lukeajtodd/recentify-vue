@@ -73,6 +73,11 @@ export const useSpotifyStore = defineStore('spotify', {
         return {
           id: item.track.id,
           name: item.track.name,
+          image: item.track.album.images[1],
+          album: {
+            id: item.track.album.id,
+            name: item.track.album.name
+          },
           artist: {
             id: item.track.artists[0].id,
             name: item.track.artists[0].name,

@@ -6,10 +6,11 @@
       mx-auto
       px-minor
       pt-minor
-      lg:px-major lg:pt-major
+      pb-minor
+      lg:px-major lg:pt-0
     "
   >
-    <aside class="flex flex-col lg:h-page-lg lg:sticky lg:top-0">
+    <aside class="flex flex-col lg:h-page-lg lg:sticky lg:top-0 lg:pt-major">
       <img
         v-if="!token"
         class="w-logo-sm lg:w-logo-lg"
@@ -19,7 +20,7 @@
       <Sidebar v-if="token" />
       <Connect :connect="connect" :disconnect="disconnect" />
     </aside>
-    <main class="flex align-center w-full lg:flex-1 mt-4">
+    <main class="flex align-center w-full lg:flex-1 lg:pt-major">
       <Nuxt />
     </main>
   </div>
