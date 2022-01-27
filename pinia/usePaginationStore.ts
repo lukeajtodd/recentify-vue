@@ -18,6 +18,10 @@ export const usePaginationStore = defineStore('pagination', {
     getUrl() {
       return this.pages[this.index]
     },
+    resetPagination() {
+      this.index = 0;
+      this.pages = [baseUrl]
+    },
     updateIndex(direction: Direction) {
       const goingNext = direction === Direction.Next
       const goingPrevious = direction === Direction.Previous

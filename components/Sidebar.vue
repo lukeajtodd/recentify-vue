@@ -8,7 +8,7 @@
             'text-primary': selectedArtist(artist),
             'font-semibold': selectedArtist(artist),
           }"
-          @click="() => updateArtist(artist.id)"
+          @click="() => handleUpdateArtist(artist.id)"
           >{{ artist.name }}</a
         >
       </li>
@@ -46,6 +46,7 @@
 import Vue from 'vue'
 import { mapActions, mapState } from 'pinia'
 
+import { usePaginationStore } from '~/pinia/usePaginationStore'
 import { useSpotifyStore } from '@/pinia/useSpotifyStore'
 import type { Artist } from '@/pinia/useSpotifyStore'
 
@@ -58,6 +59,11 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions(useSpotifyStore, ['updateArtist', 'resetFilter']),
+    ...mapActions(usePaginationStore, ['resetPagination']),
+    handleUpdateArtist(id: Artist['id']) {
+      this.resetPagination()
+      this.updateArtist(id)
+    }
   },
 })
 </script>
