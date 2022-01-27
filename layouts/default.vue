@@ -6,7 +6,7 @@
       mx-auto
       px-minor
       pt-minor
-      pb-minor
+      pb-major
       lg:px-major lg:pt-0
     "
   >
