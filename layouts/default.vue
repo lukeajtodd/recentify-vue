@@ -73,7 +73,7 @@ export default Vue.extend({
     },
 
     href: (clientId: string, redirectURI: string) =>
-      `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectURI}&scope=user-read-recently-played&show_dialog=true`,
+      `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${location.origin}${redirectURI}&scope=user-read-recently-played&show_dialog=true`,
   },
 })
 </script>
