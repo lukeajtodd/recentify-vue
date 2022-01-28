@@ -2,6 +2,8 @@
 
 Showing a user their recently played artists and tracks from Spotify.
 
+All documentation regarding [Issues](./docs/Issues.md), [Todos](./docs/TODO.md) or [Testing](./docs/TESTING.md) is in the `docs/` directory.
+
 ## Design
 
 Making use of the Spotfy Guidelines.
