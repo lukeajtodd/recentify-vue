@@ -9,9 +9,14 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Track } from '~/pinia/useSpotifyStore'
+
 export default Vue.extend({
   props: {
-    track: {}
+    track: {
+      type: Object as () => Track,
+      required: true
+    }
   }
 })
 </script>
