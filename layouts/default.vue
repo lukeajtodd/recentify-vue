@@ -48,7 +48,7 @@ export default Vue.extend({
 
     connect() {
       const popup = window.open(
-        this.href(this.$config.clientId, this.$config.redirectURI),
+        this.href(this.$config.clientId),
         'Login with Spotify',
         'width=800,height=600'
       )
@@ -72,8 +72,8 @@ export default Vue.extend({
       this.resetStore()
     },
 
-    href: (clientId: string, redirectURI: string) =>
-      `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${location.origin}${redirectURI}&scope=user-read-recently-played&show_dialog=true`,
+    href: (clientId: string) =>
+      `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${location.origin}/callback&scope=user-read-recently-played&show_dialog=true`,
   },
 })
 </script>

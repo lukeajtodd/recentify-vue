@@ -16,6 +16,12 @@ Node 14+ and a Spotify Application
 
 ## Usage
 
+### env
+
+Copy the contents of `.env.example` to `.env` and fill in the CLIENT_ID from your Spotify Application.
+
+Make sure you have included the callback URI for your current origin in your Spotify Application. It should look something like this: `https://localhost:3000/callback` or `https://www.myliveapp.com/callback`. Making sure to keep the `/callback`.
+
 ### Install
 
 ```bash

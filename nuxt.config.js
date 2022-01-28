@@ -64,8 +64,7 @@ export default {
   },
 
   publicRuntimeConfig: {
-    clientId: process.env.CLIENT_ID,
-    redirectURI: process.env.REDIRECT_URI
+    clientId: process.env.CLIENT_ID
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
